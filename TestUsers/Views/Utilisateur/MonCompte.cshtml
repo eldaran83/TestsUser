@@ -1,0 +1,55 @@
+﻿@model TestUsers.Models.Utilisateur
+
+@{
+    ViewData["Title"] = "Mon Compte";
+}
+
+<h2>Mon Compte</h2>
+
+
+<div>
+    <h4>Utilisateur : @Model.Pseudo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Pseudo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pseudo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Role)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Role)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreationUtilisateur)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateCreationUtilisateur)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateDeNaissance)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateDeNaissance)
+        </dd>
+
+    </dl>
+</div>
+
+<div class="form-group">
+    @*Pour l image*@
+    <label class="control-label">Avatar</label><br />
+    <img src="@ViewBag.ImgPath" alt="@Model.Pseudo" class="img-responsive" /><br />
+</div>
+
+
+<div class="form-group">
+    <a asp-controller="Home" asp-action="Index">Accueil</a> | <a asp-action="Edit" asp-route-userId="@Model.ApplicationUserID">Mettre à jour votre profil</a>
+</div>
+
+<div class="form-group">
+    <a asp-action="Delete" asp-route-userId="@Model.ApplicationUserID">Supprimer son compte</a>
+</div>

@@ -1,0 +1,71 @@
+﻿@model IEnumerable<TestUsers.Models.Utilisateur>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Pseudo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Role)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateCreationUtilisateur)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateDeNaissance)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ConfirmEmail)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProfilUtilisateurComplet)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUser)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pseudo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreationUtilisateur)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateDeNaissance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConfirmEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProfilUtilisateurComplet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ApplicationUserID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ApplicationUserID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ApplicationUserID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

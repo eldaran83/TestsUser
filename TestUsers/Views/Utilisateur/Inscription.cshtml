@@ -1,0 +1,66 @@
+﻿@model TestUsers.Models.Utilisateur
+
+@{
+    ViewData["Title"] = "Inscription";
+}
+
+<h2>Inscription</h2>
+
+<h4>Votre profil Utilisateur doit être complété</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Inscription" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ApplicationUserID" />
+            <div class="form-group">
+                <label asp-for="Pseudo" class="control-label"></label>
+                @{ 
+                    if (ViewBag.error != null)
+                    {
+                        <label class="alert-danger">@ViewBag.error</label>
+                    }
+                }
+                <input asp-for="Pseudo" class="form-control" />
+                <span asp-validation-for="Pseudo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Role" class="control-label"></label>
+                <input asp-for="Role" class="form-control" readonly />
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+ 
+            <div class="form-group">
+                <label asp-for="DateDeNaissance" class="control-label"></label>
+                <input asp-for="DateDeNaissance" class="form-control" />
+                <span asp-validation-for="DateDeNaissance" class="text-danger"></span>
+            </div>
+
+            @*Pour l image*@
+            <div class="form-group">
+                <label class="control-label">Avatar</label><br />
+                <img src="@Model.UrlAvatarImage" class="img-responsive" /><br />
+                <input asp-for="UrlAvatarImage" class="form-control"  type="hidden"/>
+            
+            </div>
+
+            @*Pour la confirmation de l email*@
+            <input asp-for="ConfirmEmail" type="hidden" />
+            @*Pour le profil complet*@
+            <input asp-for="ProfilUtilisateurComplet" type="hidden" />
+
+
+            <div class="form-group">
+                <input type="submit" value="Sauvegarder" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Home" asp-action="Index">Acceuil</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

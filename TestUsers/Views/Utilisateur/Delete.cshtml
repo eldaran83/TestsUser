@@ -1,0 +1,51 @@
+﻿@model TestUsers.Models.Utilisateur
+
+@{
+    ViewData["Title"] = "Supprimer son compte";
+}
+
+
+
+<h3 class="alert" style="color:red;">Êtes vous certain de vouloir supprimer votre compte ?</h3>
+<div>
+    <h4>Votre profil :</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Pseudo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pseudo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Role)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Role)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreationUtilisateur)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateCreationUtilisateur)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateDeNaissance)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateDeNaissance)
+        </dd>     
+    </dl>
+
+    <div class="form-group">
+        @*Pour l image*@
+        <label class="control-label">Avatar</label><br />
+        <img src="@ViewBag.ImgPath" alt="@Model.Pseudo" class="img-responsive" /><br />
+    </div>
+
+    <form asp-action="Delete">
+        <input type="hidden" name="userId" value="@Model.ApplicationUserID" />
+        <input type="submit" value="Supprimer son compte" class="btn btn-danger" /> |
+        <a asp-action="MonCompte">Votre compte</a>
+    </form>
+</div>
