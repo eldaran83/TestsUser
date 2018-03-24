@@ -26,7 +26,10 @@ namespace TestUsers.Models
         [Display(Name = "Date de naissance")]
         public DateTime DateDeNaissance { get; set; }
 
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
 
+        //zone pour verif
         public bool ConfirmEmail { get; set; }
         public bool ProfilUtilisateurComplet { get; set; }
 
@@ -37,5 +40,6 @@ namespace TestUsers.Models
 
         //nav
         public  ApplicationUser ApplicationUser { get; set; }
+        
     }
 }

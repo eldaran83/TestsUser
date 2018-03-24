@@ -1,12 +1,18 @@
 ﻿@model TestUsers.Models.Utilisateur
 
 @{
-    ViewData["Title"] = "Supprimer son compte";
+    ViewData["Title"] = "Zone-Admin";
 }
 
+<h2>Zone Administration</h2>
 
+<div>
+    <h3>Cette zone est strictement réservée aux administrateurs.</h3>
+    <h4>Toutes les modifications dans cette section peuvent avoir des effets importants sur la sécurité et les informations présentes sur le site.</h4>
+    <h4>Prenez garde à vos actions.</h4>
+</div>
 
-<h3 class="alert" style="color:red;">Êtes vous certain de vouloir supprimer votre compte ?</h3>
+<h3 class="alert" style="color:red;">Êtes vous certain de vouloir supprimer ce compte ?</h3>
 <div>
     <h4>Votre profil :</h4>
     <hr />
@@ -35,24 +41,6 @@
         <dd>
             @Html.DisplayFor(model => model.DateDeNaissance)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ApplicationUserID)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ApplicationUserID)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ConfirmEmail)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ConfirmEmail)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ProfilUtilisateurComplet)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ProfilUtilisateurComplet)
-        </dd>
     </dl>
 
     <div class="form-group">
@@ -63,7 +51,7 @@
 
     <form asp-action="Delete">
         <input type="hidden" name="userId" value="@Model.ApplicationUserID" />
-        <input type="submit" value="Supprimer son compte" class="btn btn-danger" /> |
-        <a asp-action="MonCompte">Votre compte</a>
+        <input type="submit" value="Supprimer ce compte" class="btn btn-danger" /> |
+        <a asp-action="Index">Retour liste utilisateurs</a>
     </form>
 </div>

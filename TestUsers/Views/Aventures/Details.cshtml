@@ -1,0 +1,36 @@
+﻿@model TestUsers.Models.BO.Aventure
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Aventure</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NomAventure)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NomAventure)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Vote)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Vote)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ImageUrl)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.AventureID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

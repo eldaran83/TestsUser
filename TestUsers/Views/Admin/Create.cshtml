@@ -1,0 +1,100 @@
+﻿@model TestUsers.Models.Utilisateur
+
+@{
+    ViewData["Title"] = "Zone-Admin";
+}
+<h2>Zone Administration</h2>
+
+<div>
+    <h3>Cette zone est strictement réservée aux administrateurs.</h3>
+    <h4>Toutes les modifications dans cette section peuvent avoir des effets importants sur la sécurité et les informations présentes sur le site.</h4>
+    <h4>Prenez garde à vos actions.</h4>
+</div>
+<h2>Créer</h2>
+
+<h4>Utilisateur</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Pseudo" class="control-label"></label>
+                @{
+                     if (ViewBag.error != null)
+                      {
+                         <label class="alert-danger">@ViewBag.error</label>
+                      }
+                }
+                <input asp-for="Pseudo" class="form-control" required/>
+                <span asp-validation-for="Pseudo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>              
+                @{
+                    if (ViewBag.errorEmail != null)
+                    {
+                        <label class="alert-danger">@ViewBag.error</label>
+                    }
+                }
+                <input asp-for="Email" class="form-control" required/>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Mot de passe</label>
+                <input id="mdp" name="mdp" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Role" class="control-label" style="color:red;"></label>
+                @{
+                    if (ViewBag.errorRole != null)
+                    {
+                        <label class="alert-danger">@ViewBag.errorRole</label>
+                     }
+                 }
+
+                @Html.DropDownListFor(model => model.Role, (SelectList)ViewBag.listeRoles, "--Choisir--", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Role)
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DateDeNaissance" class="control-label"></label>
+                <input asp-for="DateDeNaissance" class="form-control" required/>
+                <span asp-validation-for="DateDeNaissance" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="ConfirmEmail" /> @Html.DisplayNameFor(model => model.ConfirmEmail)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="ProfilUtilisateurComplet" /> @Html.DisplayNameFor(model => model.ProfilUtilisateurComplet)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="UrlAvatarImage" class="control-label"></label>
+                <input asp-for="UrlAvatarImage" class="form-control" />
+                <span asp-validation-for="UrlAvatarImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Créer cet utilisateur" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -16,6 +16,8 @@ using TestUsers.Models.Repositories.IRepositories;
 using TestUsers.Models.Repositories.Respositories;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using TestUsers.Models.Interfaces.Interfaces;
+using TestUsers.Models.Interfaces.Managers;
 
 namespace TestUsers
 {
@@ -68,7 +70,7 @@ namespace TestUsers
 
             foreach (var roleName in roleNames)
             {
-                var roleExist = await RoleManager.RoleExistsAsync(roleName);
+              var roleExist = await RoleManager.RoleExistsAsync(roleName);
                 if (!roleExist)
                 {
                     //create the roles and seed them to the database: Question 1
@@ -98,18 +100,6 @@ namespace TestUsers
                     await UserManager.AddToRoleAsync(poweruser, "Admin");
 
                 }
-
-                //Utilisateur utilisateur = new Utilisateur {
-                //    ApplicationUserID = poweruser.Id,
-                //    DateCreationUtilisateur = DateTime.Now,
-                //    Role="Admin",
-                //    DateDeNaissance = DateTime.Now,
-                //    ConfirmEmail = true,
-                //    ProfilUtilisateurComplet=true,
-                //    Pseudo="Eldaran83",
-                //    UrlAvatarImage= "/images/default-eldaran83.png"
-                //};
-               //J'ai pas accès au context ici semble t il du coup je ne peux pas le save !!!!
                
             }
         }
@@ -135,7 +125,7 @@ namespace TestUsers
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
             //Add utilisateur services
-            services.AddScoped<IRepositoryUtilisateur, UtilisateurRepository>();
+            services.AddScoped<IUtilisateurManager, UtilisateurManager>();
             //Add application services for fichier
             services.AddScoped<IRepositoryFichier, FichierRepository>();
 

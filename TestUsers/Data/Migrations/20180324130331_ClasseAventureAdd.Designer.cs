@@ -11,9 +11,10 @@ using TestUsers.Data;
 namespace TestUsers.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180324130331_ClasseAventureAdd")]
+    partial class ClasseAventureAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,32 +196,6 @@ namespace TestUsers.Data.Migrations
                     b.ToTable("Aventures");
                 });
 
-            modelBuilder.Entity("TestUsers.Models.BO.MessageAventure", b =>
-                {
-                    b.Property<int>("MessageAventureID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("AventureID1");
-
-                    b.Property<int?>("ChoixDirectionIdMessageNumero1");
-
-                    b.Property<int?>("ChoixDirectionIdMessageNumero2");
-
-                    b.Property<int?>("ChoixDirectionIdMessageNumero3");
-
-                    b.Property<string>("ContenuMessage");
-
-                    b.Property<string>("ImageUrl");
-
-                    b.Property<string>("TitreMessage");
-
-                    b.HasKey("MessageAventureID");
-
-                    b.HasIndex("AventureID1");
-
-                    b.ToTable("LesMessagesDesAventures");
-                });
-
             modelBuilder.Entity("TestUsers.Models.Utilisateur", b =>
                 {
                     b.Property<string>("ApplicationUserID");
@@ -293,13 +268,6 @@ namespace TestUsers.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("TestUsers.Models.BO.MessageAventure", b =>
-                {
-                    b.HasOne("TestUsers.Models.BO.Aventure", "AventureID")
-                        .WithMany("MessageAventures")
-                        .HasForeignKey("AventureID1");
                 });
 
             modelBuilder.Entity("TestUsers.Models.Utilisateur", b =>

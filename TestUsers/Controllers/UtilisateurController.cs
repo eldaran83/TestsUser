@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using TestUsers.Data;
 using TestUsers.Models;
+using TestUsers.Models.Interfaces.Interfaces;
 using TestUsers.Models.Repositories.IRepositories;
 using TestUsers.Services;
 
@@ -30,7 +31,7 @@ namespace TestUsers.Controllers
         private readonly IHostingEnvironment _env;
 
         private readonly ApplicationDbContext _context;
-        private readonly IRepositoryUtilisateur _utilisateurRepository;
+        private readonly IUtilisateurManager _utilisateurManager;
         private readonly IRepositoryFichier _fichierRepository;
         /// <summary>
         /// constructeur
@@ -49,7 +50,7 @@ namespace TestUsers.Controllers
             ILogger<AccountController> logger,
             IHostingEnvironment env,
             ApplicationDbContext context,
-            IRepositoryUtilisateur utilisateurRepository,
+            IUtilisateurManager utilisateurManager,
             IRepositoryFichier fichierRepository)
         {
             _userManager = userManager;
@@ -58,7 +59,7 @@ namespace TestUsers.Controllers
             _logger = logger;
             _env = env;
             _context = context;
-            _utilisateurRepository = utilisateurRepository;
+            _utilisateurManager = utilisateurManager;
             _fichierRepository = fichierRepository;
         }
 
@@ -76,7 +77,7 @@ namespace TestUsers.Controllers
                 return NotFound();
             }
             //gestion du fait que l utilisateur peut deja exister => renvoi sur la vue details
-            Utilisateur lutilisateur = await _utilisateurRepository.GetUtilisateurByIdAsync(userId);
+            Utilisateur lutilisateur = await _utilisateurManager.GetUtilisateurByIdAsync(userId);
             if (lutilisateur != null)
             {
                 return RedirectToAction("MonCompte", new RouteValueDictionary(new
@@ -97,15 +98,15 @@ namespace TestUsers.Controllers
                 DateCreationUtilisateur = DateTime.Now,
                 ProfilUtilisateurComplet = false,
                 ConfirmEmail = user.EmailConfirmed,
+                Email = user.Email,
                 DateDeNaissance = DateTime.Now,
                 Role = "Member", 
                 UrlAvatarImage = "/images/userDefault.png"
             };
-            await _utilisateurRepository.AddUtilisateur(user,nouvel_utilisateur); //ajoute le nouvel utilisateur
-           // await _userManager.AddToRoleAsync(user, "Member"); // attribu par défaut le role de Member à cet utilisateur
-
+            await _utilisateurManager.AddUtilisateur(user,nouvel_utilisateur); //ajoute le nouvel utilisateur
+           
             // recherche utilisateur avec l'id 
-            var utilisateur = await _utilisateurRepository.GetUtilisateurByIdAsync(userId);
+            var utilisateur = await _utilisateurManager.GetUtilisateurByIdAsync(userId);
 
             if (utilisateur == null)
             {
@@ -122,7 +123,7 @@ namespace TestUsers.Controllers
         public async Task<IActionResult> Inscription(Utilisateur utilisateur)
         {
             //vérification pour savoir si le pseudo est libre ou pas 
-            if (await _utilisateurRepository.PseudoExist(utilisateur.Pseudo)) //si pas libre on renvoie le formulaire
+            if (await _utilisateurManager.PseudoExist(utilisateur.Pseudo)) //si pas libre on renvoie le formulaire
             {
                 ViewBag.error = "Ce pseudo n'est pas disponible.";
                  ViewData["ApplicationUserID"] = utilisateur.ApplicationUserID;
@@ -133,7 +134,7 @@ namespace TestUsers.Controllers
  
             if (ModelState.IsValid)
             {
-                await _utilisateurRepository.UpdateUtilisateur(utilisateur);
+                await _utilisateurManager.UpdateUtilisateur(utilisateur);
                 return RedirectToAction("MonCompte", new RouteValueDictionary(new
                 {
                     controller = "Utilisateur",
@@ -164,7 +165,7 @@ namespace TestUsers.Controllers
             {
                 return NotFound();
             }
-            var utilisateur = await _utilisateurRepository.GetUtilisateurByIdAsync(userId);
+            var utilisateur = await _utilisateurManager.GetUtilisateurByIdAsync(userId);
             if (utilisateur == null)
             {
                 return NotFound();
@@ -195,10 +196,11 @@ namespace TestUsers.Controllers
         public async Task<IActionResult> MonCompte(Utilisateur utilisateur, List<IFormFile> AvatarImage)
         {
             utilisateur.DateCreationUtilisateur = DateTime.Now;
+            
 
             if (ModelState.IsValid)
             {
-                await _utilisateurRepository.UpdateUtilisateur(utilisateur);
+                await _utilisateurManager.UpdateUtilisateur(utilisateur);
                 return RedirectToAction("MonCompte", new RouteValueDictionary(new
                 {
                     controller = "Utilisateur",
@@ -226,7 +228,7 @@ namespace TestUsers.Controllers
                 return NotFound();
             }
             //cherche le user dans la base 
-            var utilisateur = await _utilisateurRepository.GetUtilisateurByIdAsync(userId);
+            var utilisateur = await _utilisateurManager.GetUtilisateurByIdAsync(userId);
             if (utilisateur == null) //si on en trouve pas
             {
                 return NotFound();
@@ -261,7 +263,7 @@ namespace TestUsers.Controllers
               
                 if (ModelState.IsValid)
                 {
-                    await _utilisateurRepository.UpdateUtilisateur(utilisateur);
+                    await _utilisateurManager.UpdateUtilisateur(utilisateur);
                     return RedirectToAction("MonCompte", new RouteValueDictionary(new
                     {
                         controller = "Utilisateur",
@@ -302,7 +304,7 @@ namespace TestUsers.Controllers
                 return NotFound();
             }
             //cherche le user dans la base 
-            var utilisateur = await _utilisateurRepository.GetUtilisateurByIdAsync(userId);
+            var utilisateur = await _utilisateurManager.GetUtilisateurByIdAsync(userId);
             if (utilisateur == null) //si on en trouve pas
             {
                 return NotFound();
@@ -342,14 +344,14 @@ namespace TestUsers.Controllers
                 return NotFound();
             }
             //cherche le user dans la base 
-            var utilisateur = await _utilisateurRepository.GetUtilisateurByIdAsync(userId);
+            var utilisateur = await _utilisateurManager.GetUtilisateurByIdAsync(userId);
             if (utilisateur == null) //si on en trouve pas
             {
                 return NotFound();
             }
 
 
-            if (await _utilisateurRepository.RemoveUtilisateur(userId))
+            if (await _utilisateurManager.RemoveUtilisateur(userId))
             {
                 //redirection vers l accueil
                 return RedirectToAction("Index", new RouteValueDictionary(new
@@ -441,9 +443,9 @@ namespace TestUsers.Controllers
             //ajoute le fichier 
             var avatarURl = _fichierRepository.SaveFichier(webRoot, userId, nomDuDossier, form);
             //cherche le user dans la base 
-            var utilisateur = await _utilisateurRepository.GetUtilisateurByIdAsync(userId);
+            var utilisateur = await _utilisateurManager.GetUtilisateurByIdAsync(userId);
             utilisateur.UrlAvatarImage = avatarURl;
-            await _utilisateurRepository.UpdateUtilisateur(utilisateur);
+            await _utilisateurManager.UpdateUtilisateur(utilisateur);
            
             //renvoi vers le edit 
             return RedirectToAction("Edit", new { userId = Convert.ToString(form["ApplicationUserID"]) });

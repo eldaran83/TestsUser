@@ -1,0 +1,91 @@
+﻿@model IEnumerable<TestUsers.Models.Utilisateur>
+
+@{
+    ViewData["Title"] = "Zone-Admin";
+}
+
+<h2>Zone Administration || <a asp-action="Create" class="btn btn-success">Créer nouvel utilisateur</a></h2>
+
+<div>
+    <h3>Cette zone est strictement réservée aux administrateurs.</h3>
+    <h4>Toutes les modifications dans cette section peuvent avoir des effets importants sur la sécurité et les informations présentes sur le site.</h4>
+    <h4>Prenez garde à vos actions.</h4>
+</div>
+
+<div class="alert-info">
+    <h3>
+            @ViewData["Message"]
+    </h3> 
+</div>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Pseudo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model =>model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Role)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateCreationUtilisateur)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateDeNaissance)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ConfirmEmail)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProfilUtilisateurComplet)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UrlAvatarImage)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUser)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pseudo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem =>item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreationUtilisateur)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateDeNaissance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConfirmEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProfilUtilisateurComplet)
+            </td>
+            <td>
+                <img src="@item.UrlAvatarImage" alt="@item.Pseudo+" class="img-responsive" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-userId="@item.ApplicationUserID" class="btn btn-block btn-warning">MAJ</a> 
+                <a asp-action="Details" asp-route-userId="@item.ApplicationUserID" class="btn btn-block btn-info">Détails</a> 
+                <a asp-action="Delete" asp-route-userId="@item.ApplicationUserID" class="btn btn-block btn-danger">Supprimer</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

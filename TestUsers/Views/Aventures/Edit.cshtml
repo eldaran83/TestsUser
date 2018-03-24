@@ -1,0 +1,41 @@
+﻿@model TestUsers.Models.BO.Aventure
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Aventure</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AventureID" />
+            <div class="form-group">
+                <label asp-for="NomAventure" class="control-label"></label>
+                <input asp-for="NomAventure" class="form-control" />
+                <span asp-validation-for="NomAventure" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vote" class="control-label"></label>
+                <input asp-for="Vote" class="form-control" />
+                <span asp-validation-for="Vote" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

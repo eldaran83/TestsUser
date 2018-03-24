@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TestUsers.Models;
+using TestUsers.Models.BO;
 
 namespace TestUsers.Data
 {
@@ -15,9 +16,7 @@ namespace TestUsers.Data
         {
         }
 
-        //public ApplicationDbContext()
-        //{
-        //}
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -27,6 +26,9 @@ namespace TestUsers.Data
             // Add your customizations after calling base.OnModelCreating(builder);
         }
 
-      public DbSet<Utilisateur> Utilisateurs { get; set; }
+        public DbSet<Utilisateur> Utilisateurs { get; set; } // save en BDD les utilisateurs
+        public DbSet<Aventure> Aventures { get; set; } //save les aventures
+        public DbSet<MessageAventure> LesMessagesDesAventures { get; set; } //save les messages de l aventure
+
     }
 }

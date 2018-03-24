@@ -1,11 +1,15 @@
 ﻿@model TestUsers.Models.Utilisateur
 
 @{
-    ViewData["Title"] = "Mon Compte";
+    ViewData["Title"] = "Zone-Admin";
 }
+<h2>Zone Administration</h2>
 
-<h2>Mon Compte</h2>
-
+<div>
+    <h3>Cette zone est strictement réservée aux administrateurs.</h3>
+    <h4>Toutes les modifications dans cette section peuvent avoir des effets importants sur la sécurité et les informations présentes sur le site.</h4>
+    <h4>Prenez garde à vos actions.</h4>
+</div>
 
 <div>
     <h4>Utilisateur : @Model.Pseudo</h4>
@@ -53,9 +57,9 @@
 
 
 <div class="form-group">
-    <a asp-controller="Home" asp-action="Index">Accueil</a> | <a asp-action="Edit" asp-route-userId="@Model.ApplicationUserID">Mettre à jour votre profil</a>
+    <a asp-controller="Admin" asp-action="Index">Accueil</a> | <a asp-action="Edit" asp-route-userId="@Model.ApplicationUserID">Mettre à jour votre profil</a>
 </div>
 
 <div class="form-group">
-    <a asp-action="Delete" asp-route-userId="@Model.ApplicationUserID">Supprimer son compte</a>
+    <a asp-action="Delete" asp-route-userId="@Model.ApplicationUserID">Supprimer ce compte</a>
 </div>

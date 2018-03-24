@@ -1,11 +1,13 @@
 ﻿@model TestUsers.Models.Utilisateur
 
 @{
-    ViewData["Title"] = "MAJ | Mon Compte ";
+    ViewData["Title"] = "Zone Admin | Edit";
 }
-
-<h2>Mettre à jour mon compte</h2>
+<h1 style="color:mediumvioletred;">ZONE ADMINISTRATION</h1>
+<h2>Mettre à jour le profil de l'utilisateur</h2>
+<h2 style="color:mediumvioletred;">Attention vous pouvez tout modifier</h2>
 <hr />
+ 
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit" method="post" enctype="multipart/form-data">
@@ -13,17 +15,23 @@
             <input type="hidden" asp-for="ApplicationUserID" />
             <div class="form-group">
                 <label asp-for="Pseudo" class="control-label"></label>
-                <input id="Pseudo" name="Pseudo" value="@Model.Pseudo" class="form-control" readonly />
+                <input id="Pseudo" name="Pseudo" value="@Model.Pseudo" class="form-control" />
                 <span asp-validation-for="Pseudo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Role" class="control-label"></label>
-                <input asp-for="Role" class="form-control" readonly />
+                <label asp-for="Role" class="control-label" style="color:red;"></label>
+                @Html.DropDownListFor(model => model.Role, (SelectList)ViewBag.listeRoles,"--Choisir--", new { @class = "form-control" })
+                @*@Html.DropDownListFor(model => model.Role, (SelectList)ViewBag.listeRoles, "--Select--", new { @class = "form-control" })*@
+
+                @*<input id="@Model.Role" name="@Model.Role" class="form-control">@Html.DropDownList("listeRoles") </input>*@
+                @Html.ValidationMessageFor(model => model.Role)
+
                 <span asp-validation-for="Role" class="text-danger"></span>
+
             </div>
             <div class="form-group">
                 <label asp-for="DateCreationUtilisateur" class="control-label"></label>
-                <input id="DateDeNaissance" name="DateDeNaissance" value="@Model.DateDeNaissance" class="form-control" readonly />
+                <input id="DateCreationUtilisateur" name="DateCreationUtilisateur" value="@Model.DateCreationUtilisateur" class="form-control" />
                 <span asp-validation-for="DateCreationUtilisateur" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -33,8 +41,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" asp-value="Email" class="form-control"  />
-                @*<input id="Email" name="Email" value="@Model.Email" class="form-control" />*@
+                <input asp-for="Email" asp-value="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
@@ -42,15 +49,23 @@
             <div class="form-group">
                 <label class="control-label">Avatar |  <a href="/Utilisateur/UploadImage/?userId=@Model.ApplicationUserID">Changer son Avatar</a></label><br />
                 <img src="@ViewBag.ImgPath" alt="@Model.Pseudo" class="img-responsive" /><br />
-                @*<input type="file" name="user_image" id="user_image" />*@
                 <input id="UrlAvatarImage" name="UrlAvatarImage" value="@Model.UrlAvatarImage" type="hidden" />
-
             </div>
 
             <div class="form-group">
-                <input asp-for="ConfirmEmail" type="hidden" />
-                <input asp-for="ProfilUtilisateurComplet" type="hidden" />
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label asp-for="ConfirmEmail" class="control-label"></label>
+                <input asp-for="ConfirmEmail" asp-value="ConfirmEmail" class="form-control" />
+                <span asp-validation-for="ConfirmEmail" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ProfilUtilisateurComplet" class="control-label"></label>
+                <input asp-for="ProfilUtilisateurComplet" asp-value="Email" class="form-control" />
+                <span asp-validation-for="ProfilUtilisateurComplet" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Modifier" class="btn btn-warning" />
             </div>
         </form>
     </div>
@@ -58,7 +73,7 @@
 
 <div></div>
 <div>
-    <a asp-controller="Home" asp-action="Index">Acceuil</a>
+    <a asp-controller="Admin" asp-action="Index">Acceuil</a>
 </div>
 
 @section Scripts {

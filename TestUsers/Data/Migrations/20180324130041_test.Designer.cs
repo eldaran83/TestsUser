@@ -11,9 +11,10 @@ using TestUsers.Data;
 namespace TestUsers.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180324130041_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -179,53 +180,9 @@ namespace TestUsers.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("TestUsers.Models.BO.Aventure", b =>
-                {
-                    b.Property<int>("AventureID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ImageUrl");
-
-                    b.Property<string>("NomAventure");
-
-                    b.Property<decimal>("Vote");
-
-                    b.HasKey("AventureID");
-
-                    b.ToTable("Aventures");
-                });
-
-            modelBuilder.Entity("TestUsers.Models.BO.MessageAventure", b =>
-                {
-                    b.Property<int>("MessageAventureID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("AventureID1");
-
-                    b.Property<int?>("ChoixDirectionIdMessageNumero1");
-
-                    b.Property<int?>("ChoixDirectionIdMessageNumero2");
-
-                    b.Property<int?>("ChoixDirectionIdMessageNumero3");
-
-                    b.Property<string>("ContenuMessage");
-
-                    b.Property<string>("ImageUrl");
-
-                    b.Property<string>("TitreMessage");
-
-                    b.HasKey("MessageAventureID");
-
-                    b.HasIndex("AventureID1");
-
-                    b.ToTable("LesMessagesDesAventures");
-                });
-
             modelBuilder.Entity("TestUsers.Models.Utilisateur", b =>
                 {
                     b.Property<string>("ApplicationUserID");
-
-                    b.Property<int?>("AventureID");
 
                     b.Property<bool>("ConfirmEmail");
 
@@ -244,8 +201,6 @@ namespace TestUsers.Data.Migrations
                     b.Property<string>("UrlAvatarImage");
 
                     b.HasKey("ApplicationUserID");
-
-                    b.HasIndex("AventureID");
 
                     b.ToTable("Utilisateurs");
                 });
@@ -295,23 +250,12 @@ namespace TestUsers.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TestUsers.Models.BO.MessageAventure", b =>
-                {
-                    b.HasOne("TestUsers.Models.BO.Aventure", "AventureID")
-                        .WithMany("MessageAventures")
-                        .HasForeignKey("AventureID1");
-                });
-
             modelBuilder.Entity("TestUsers.Models.Utilisateur", b =>
                 {
                     b.HasOne("TestUsers.Models.ApplicationUser", "ApplicationUser")
                         .WithOne("Utilisateur")
                         .HasForeignKey("TestUsers.Models.Utilisateur", "ApplicationUserID")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("TestUsers.Models.BO.Aventure")
-                        .WithMany("Joueurs")
-                        .HasForeignKey("AventureID");
                 });
 #pragma warning restore 612, 618
         }
